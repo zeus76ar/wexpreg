@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+    <html lang="es">
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+            <meta name="description" content="Expresones Regulares con JS - Tester">
+            <meta name="author" content="AB software">
+        	<meta name="keywords" content="tester, expresiones, regulares, javascript, bootstrap">
+            <!-- <link rel="icon" href="../../favicon.ico"> -->
+            
+            <title>wExpReg</title>
+            
+            <!-- Bootstrap core CSS -->
+            <!-- Latest compiled and minified CSS -->
+            <!--
+            <link rel="stylesheet" href="//absoftware.net/www/jquery/bootstrap/3.3.5/css/bootstrap.min.css" />
+            -->
+            <!-- Optional theme -->
+            <!-- <link rel="stylesheet" href="//absoftware.net/www/jquery/bootstrap/3.3.5/css/bootstrap-theme.min.css" /> -->
+            <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+            <!--
+            <link rel="stylesheet"
+            href="//absoftware.net/www/jquery/bootstrap/assets/css/ie10-viewport-bug-workaround.css">
+            -->
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" 
+            href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+            crossorigin="anonymous">
+            <!-- Optional theme -->
+            <link rel="stylesheet" 
+            href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+            integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" 
+            crossorigin="anonymous">
+            <!-- Custom styles for this template -->
+            <link rel="stylesheet" href="css/main.min.css">
+        </head>
+        
+        <body>    
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#" data-toggle="modal"
+                        data-target="#acercade">wExpReg</a>
+                    </div>
+                </div>
+            </nav>
+    
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8"><!-- col-formulario -->
+                        <form class="form">
+                            <fieldset>
+                                <legend>Expresiones Regulares</legend>
+                                
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="texto">Texto</label>
+                                            <textarea class="form-control" id="texto"
+                                            required="1" placeholder="Ingrese el texto..."></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="funcion">Metodo</label>
+                                            <select class="form-control" id="funcion"
+                                            required="1">
+                                                <option value="">Seleccione un metodo...</option>
+                                                <optgroup label="Metodos RegExp">
+                                                    <option value="test">Test</option>
+                                                    <option value="exec">Exec</option>
+                                                </optgroup>
+                                                <optgroup label="Metodos String">
+                                                    <option value="match">Match</option>
+                                                    <option value="search">Search</option>
+                                                    <option value="replace">Replace</option>
+                                                    <option value="split">Split</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group nuevo_texto">
+                                            <label for="nuevo">Nuevo Texto</label>
+                                            <input type="text" class="form-control"
+                                            id="nuevo" required="1"
+                                            placeholder="Ingrese el nuevo texto...">
+                                        </div>
+                                    </div>
+                                </div><!-- ./row -->
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="patron">Expresion Regular</label>
+                                            <input type="text" class="form-control"
+                                            id="patron" required="1"
+                                            placeholder="Ingrese la expresion...">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label>Flags</label>
+                                        <br>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" class="flag"
+                                            value="g"> g
+                                        </label>
+                                        
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" class="flag"
+                                            value="i"> i
+                                        </label>
+                                        
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" class="flag"
+                                            value="m"> m
+                                        </label>
+                                        
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" class="flag"
+                                            value="y"> y
+                                        </label>
+                                    </div>
+                                </div><!-- ./row -->
+                                
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <button type="button"
+                                        class="btn btn-default btn-block" id="procesar">
+                                        Procesar</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                        
+                        <h4>Resultados</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6" id="resultados_1">
+                                &nbsp;
+                            </div>
+                            
+                            <div class="col-md-6" id="resultados_2">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div><!-- ./col-formulario -->
+                    
+                    <div class="col-md-4">
+                        <h4>Ayuda</h4>
+                        
+                        <div>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#ce" aria-controls="ce" role="tab"
+                                    data-toggle="tab">C. Especiales</a>
+                                </li>
+                                
+                                <li role="presentation">
+                                    <a href="#flags" aria-controls="flags"
+                                    role="tab" data-toggle="tab">Flags</a>
+                                </li>
+                                
+                                <li role="presentation">
+                                    <a href="#metodos" aria-controls="metodos"
+                                    role="tab" data-toggle="tab">Metodos</a>
+                                </li>
+                                
+                                <li role="presentation">
+                                    <a href="#resultados" aria-controls="resultados"
+                                    role="tab" data-toggle="tab">Resultados</a>
+                                </li>
+                            </ul><!-- ./Nav tabs -->
+                            
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active"
+                                id="ce">
+                                    <div class="ayuda">
+<table class="fullwidth-table">
+<caption>Caracteres especiales para expresiones regulares.</caption>
+
+<thead>
+<tr>
+<th scope="col">carácter</th>
+<th scope="col">Significado</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>
+<code>\</code>
+</td>
+<td>
+<p>
+Buscará coincidencias conforme a las siguientes reglas:
+<br>
+<br> Una barra invertida precediendo un carácter simple indica que éste debe ser interpretado como un carácter especial y no de forma literal. Por ejemplo, una 'b' sin '\' precediéndole coincidirá con cualquier 'b' minúscula en la cadena, sin embargo, '\b' no coincidirá con algún carácter en específico; representará el delimitador especial de palabras.<br>
+<br> Una barra invertida que precede a un carácter especial indica que éste deberá ser interpretado literalmente, esto es, como un carácter simple y no como un carácter especial. A esto se le demonina&nbsp;<code>escapado</code>.&nbsp;Por ejemplo, en el patrón '/a*/' el '*' indica que se deberá buscar una secuencia de 'a' cero o más veces; por el contrario, el cambiar el patrón a '/a\*/', el carácter especial es interpretado como un carácter simple, y cadenas como 'a*' harán coincidencia.<br>
+<br> No se olvide de <em>escapar</em> la propia barra invertida al usarla en expresiones regulares con strings - RegExp("patron") -&nbsp;ya que la \ es un carácter de escapado en strings.
+</p>
+</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>Coincide con el principio de la entrada. Si la bandera de multilínea está activada, también coincidirá inmediatamente después de un salto de línea.<br>
+<br> Por ejemplo, <code>/^A/</code> no coincide con la 'A' en "an A", pero sí con la 'A' en "An E".<br>
+<br> El carácter '<code>^</code>' tiene un significado diferente cuando aparece como el primer carácter en un patrón. Véase patrones complementarios para mayores detalles y ejemplos.</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>
+<p>Busca el final de la entrada. Si la bandera de multilínea se establece en <code>true</code>, también buscará inmediatamente antes de un carácter de salto de línea.</p>
+
+<p>Por ejemplo, la expresión <code>/r$/</code> no encontrará el carácter 'r' en la cadena "cenaremos", pero sí la encontrará en la cadena "cenar".</p>
+</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>
+<p>Busca el carácter precedente 0 (cero) o más veces. Es equivalente a {0,}.</p>
+
+<p>Por ejemplo, la expresión <code>/bo*/</code> encontrará la subcadena 'boooo' en la cadena "A ghost booooed" y el carácter 'b' en la cadena "A bird warbled", pero no encontrará nada en la cadena "A goat grunted".</p>
+</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>
+<p>Busca el carácter precedente 1 o más veces. Es equivalente a {1,}.</p>
+
+<p>Por ejemplo, la expresión <code>/u+/</code> encontrará el carácter 'u' en la cadena "dulce" y todos los caracteres 'u' en la cadena "duuuuulce".</p>
+</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>Busca el carácter precedente 0 (cero) o 1 (una) vez. Es equivalente a<code> {0,1}</code>.<br>
+<br>
+Por ejemplo, la expresión <code>/e?le?/</code> encontrará la subcadena 'el' en la cadena "angel" y la subcadena 'le' en la cadena "angle" y también el carácter 'l' en la cadena "oslo".<br>
+<br>
+Si se utiliza inmediatamente después que cualquiera de los cuantificadores *, +, ?, o {}, hace que el cuantificador no sea expansivo (encontrando la menor cantidad posible de caracteres), en comparación con el valor predeterminado, que sí es expansivo (encontrando tantos caracteres como le sea posible). Por ejemplo, aplicando la expresión <code>/\d+/</code> a la cadena "123abc" encuentra "123". Pero aplicando la expresión <code>/\d+?/</code> a la misma cadena, encuentra solamente el carácter "1".<br>
+<br>
+También se utiliza en coincidencias previsivas, como se describe en las entradas&nbsp;<code>x(?=y)</code>&nbsp; y &nbsp;<code>x(?!y)</code> de esta tabla.<br>
+&nbsp;</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>
+<p>(El punto decimal) coincide con cualquier carácter excepto un&nbsp;carácter&nbsp;de nueva línea.</p>
+
+<p>Por ejemplo&nbsp;, <code>/.n/</code> coincide 'an' y 'on' en "nay, an apple is on the tree", pero no 'nay'.</p>
+</td>
+</tr>
+<tr>
+<td><code>(x)</code></td>
+<td>
+<p>Busca 'x' y recuerda la búsqueda, como el siguiente ejemplo lo muestra. Los paréntesis&nbsp;son llamados <em>paréntesis de captura</em>.&nbsp;<br>
+<br>
+El '<code>(foo)</code>' y '<code>(bar)</code>' en el patrón&nbsp;&nbsp;<code>/(foo) (bar) \1 \2/</code> busca y recuerda las primeras dos palabras en el string &nbsp;"foo bar foo bar". El&nbsp;<code>\1 y</code>&nbsp;<code>\2</code>&nbsp;en el patron coincida las dos últimas palabras de la cadena. Nota que <code>\1, \2, \n</code> son usados en la parte donde se define la expresión regular. Cuando se usan en la parte de reemplazo, se debe usar la sintaxis&nbsp; <code>$1, $2, $n</code> en su lugar&nbsp; <code>'bar foo'.replace( /(...) (...)/, '$2 $1' )</code>.</p>
+</td>
+</tr>
+<tr>
+<td><code>(?:x)</code></td>
+<td>Coincide con 'x' pero no recuerda la coincidencia. Los paréntesis son llamados paréntesis no capturadores, y permiten definir subexpresiones para manipular con los operadores de las expresiones regulares. Considera la expresión de ejemplo&nbsp;<code>/(?:foo){1,2}/</code>.&nbsp; Si la expresión fuera /foo{1,2}/, los caracteres <code>{1,2}</code>&nbsp; se aplicarían sólo a la última 'o' en 'foo'. Con los paréntesis no capturadores, <code>{1,2}</code> se aplica a la palabra entera 'foo'.</td>
+</tr>
+<tr>
+<td><code>x(?=y)</code></td>
+<td>
+<p>Coincide con 'x' sólo si 'x' es seguida por 'y'. Esto se denomina previsión&nbsp;(lookahead, mirar adelante).</p>
+
+<p>Por ejemplo, <code>/Jack(?=Sprat)/</code>&nbsp;coincide con&nbsp;'Jack' solo si es seguido por 'Sprat'. <code>/Jack(?=Sprat|Frost)/</code> conicide con 'Jack' solo si es seguido por 'Sprat' o&nbsp;'Frost'. Sin embargo, ni 'Sprat' ni&nbsp;'Frost' serán parte del resultado.</p>
+</td>
+</tr>
+<tr>
+<td><code>x(?!y)</code></td>
+<td>
+<p>Coincide con&nbsp;'x' solo si 'x' no es seguida por 'y'. Es una previsión negativa.</p>
+
+<p>Por ejemplo, <code>/\d+(?!\.)/</code>&nbsp;coincide con numeros solo si no vienen seguidos por un punto&nbsp;decimal. La expresion regular&nbsp;<code>/\d+(?!\.)/.exec("3.141")</code> coincide con '141' pero no con '3.141'.</p>
+</td>
+</tr>
+<tr>
+<td><code>x|y</code></td>
+<td>
+<p>Coincide con 'x' o&nbsp;'y'.</p>
+
+<p>Por ejemplo, <code>/green|red/</code> coincide con&nbsp;'green' en "green apple" y 'red' en "red apple."</p>
+</td>
+</tr>
+<tr>
+<td><code>{n}</code></td>
+<td>Coincide exactamente con n ocurrencias de la expresión. N debe ser un entero positivo.<br>
+<br>
+Por ejemplo, <code>/a{2}/</code>&nbsp;no coincide con la 'a' en "candy," pero si con las a de "caandy," y las 2 primeras a en "caaandy."</td>
+</tr>
+<tr>
+<td><code>{n,m}</code></td>
+<td>
+<p>Donde <code>n</code>&nbsp;y&nbsp;<code>m</code>&nbsp;son enteros positivos y n &lt;= m. Coincide con al menos <code>n</code>&nbsp;y no más de&nbsp;<code>m</code> ocurrencias de la expresión. Si se omite <code>m</code>, no tiene limite de máximo.</p>
+
+<p>Por ejemplo, <code>/a{1,3}/</code>&nbsp;no coincide con "cndy", pero sí&nbsp;con la&nbsp;'a' en "candy," las primeras 2 a en "caandy," y las primeras 3 <code>a</code> en "caaaaaaandy". Note&nbsp;que en "caaaaaaandy", la coincidencia es "aaa", aunque la cadena contenga más <code>a</code>&nbsp;en ella.</p>
+</td>
+</tr>
+<tr>
+<td><code>[xyz]</code></td>
+<td>Grupo de caracteres. Este tipo de patrón coincide con cada carácter dentro de los corchetes, incluyendo&nbsp; secuencias de escapado. Caracteres especiales como el punto (<code>.</code>) y el asterisco (<code>*</code>) no son especiales en un grupo, así que no necesitan ser escapados. Puede especificar un rango utilizando un guión, como en el siguiente ejemplo.<br>
+<br>
+El patrón <code>[a-d]</code>, que equivale a <code>[abcd]</code>, coincide con la 'b' en "brisket" y la 'c' in "city". El patrón <code>/[a-z.]+/ y</code>&nbsp;<code>/[\w.]+/</code>&nbsp;coinciden con toda la cadena "test.i.ng".</td>
+</tr>
+<tr>
+<td><code>[^xyz]</code></td>
+<td>
+<p>Grupo de caracteres negativo. Significa que coincide con cualquier cosa que no esté en los corchetes. Puede especificar rangos. Todo lo que funciona en el grupo de caracteres positivo funciona también aquí.</p>
+
+<p>Por ejemplo, <code>[^abc]</code>&nbsp;es lo mismo que <code>[^a-c], y c</code>oincide con la 'r' en "brisket" y&nbsp;'h' en "chop."</p>
+</td>
+</tr>
+<tr>
+<td><code>[\b]</code></td>
+<td>Coincide con backspace (U+0008). Debe ir entre corchetes. (No confundir con <code>\b</code>.)</td>
+</tr>
+<tr>
+<td><code>\b</code></td>
+<td>
+<p>Coincide con un <em>limite de palabra</em>. Un <em>limite de palabra</em>&nbsp;coincide con la posicion entre donde un carácter de palabra no viene precedido o seguido por otro. Notese que el límite no estará incluido en la coincidencia. En otras palabras, la longitud del limite es cero.&nbsp;(No confundir con <code>[\b]</code>.)</p>
+
+<p>Ejemplos:<br>
+<code>/\bm/</code>&nbsp;coincide con la 'm' de "moon" ;<br>
+<code>/oo\b/</code>&nbsp;no tiene coincidencias en "moon", porque las 'oo' estan seguidas de una 'n' que es un carácter de palabra;<br>
+<code>/oon\b/</code>&nbsp;coincide con 'oon' en "moon", porque&nbsp;'oon' es el final de la cadena, por lo cual no va&nbsp;seguido de un carácter de palabra;<br>
+<code>/\w\b\w/</code>&nbsp;no coincidirá con nada, porque un carácter de palabra no puede estar seguido por ambos, un limite y un carácter de palabra.</p>
+</td>
+</tr>
+<tr>
+<td><code>\B</code></td>
+<td>
+<p>Coincide con un <em>no-limite de palabra</em>. Esto coincide con una posicion donde el anterior y el siguiente carácter son del mismo tipo: ambos son o no son caracteres de palabra. El inicio y el final de una cadena se consideran <em>no palabras</em>.</p>
+
+<p>Por ejemplo, <code>/\B../</code>&nbsp;coincide con 'oo' en "noonday", y&nbsp;<code>/y\B./</code> matches 'ye' in "possibly yesterday."</p>
+</td>
+</tr>
+<tr>
+<td><code>\c<em>X</em></code></td>
+<td>
+<p>Donde&nbsp;<em>X</em>&nbsp;es&nbsp;un&nbsp;carácter entre A y&nbsp;Z. Coincide con un carácter de control en un string.</p>
+
+<p>Por ejemplo, <code>/\cM/</code> coincide con control-M (U+000D) en un&nbsp;string.</p>
+</td>
+</tr>
+<tr>
+<td><code>\d</code></td>
+<td>
+<p>Coincide con un carácter de número. Equivalente a&nbsp;<code>[0-9]</code>.</p>
+
+<p>Por ejemplo, <code>/\d/</code> or <code>/[0-9]/</code> coinciden con el '2' en "B2 is the suite number."</p>
+</td>
+</tr>
+<tr>
+<td><code>\D</code></td>
+<td>
+<p>Coincide con cualquier carácter no numérico. Equivalente a&nbsp;<code>[^0-9]</code>.</p>
+
+<p>Por ejemplo, <code>/\D/</code> or <code>/[^0-9]/</code> coincide con la 'B' en "B2 is the suite number."</p>
+</td>
+</tr>
+<tr>
+<td><code>\f</code></td>
+<td>Coincide con un form feed (salto de página) (U+000C).</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>Coincide con un line feed (salto de linea) (U+000A).</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>Coincide con un carriage return (retorno de carro) (U+000D).</td>
+</tr>
+<tr>
+<td><code>\s</code></td>
+<td>
+<p>Coincide con un <em>carácter de espacio</em>, entreellos incluidos&nbsp;espacio,&nbsp;tab, salto de página, salto de linea y&nbsp;retorno de carro. Equivalente a&nbsp;<code>[ \f\n\r\t\v&#8203;\u00a0\u1680&#8203;\u180e\u2000&#8203;\u2001\u2002&#8203;\u2003\u2004&#8203;\u2005\u2006&#8203;\u2007\u2008&#8203;\u2009\u200a&#8203;\u2028\u2029&#8203;&#8203;\u202f\u205f&#8203;\u3000]</code>.</p>
+
+<p>Por ejemplo, <code>/\s\w*/</code>&nbsp;coincide con ' bar' en "foo bar."</p>
+</td>
+</tr>
+<tr>
+<td><code>\S</code></td>
+<td>
+<p>Coincide con todo menos <em>caracteres de espacio</em>. Equivalente a&nbsp;<code>[^ \f\n\r\t\v&#8203;\u00a0\u1680&#8203;\u180e\u2000&#8203;\u2001\u2002&#8203;\u2003\u2004&#8203;\u2005\u2006&#8203;\u2007\u2008&#8203;\u2009\u200a&#8203;\u2028\u2029&#8203;\u202f\u205f&#8203;\u3000]</code>.</p>
+
+<p>Por ejemplo, <code>/\S\w*/</code>&nbsp;coincide con 'foo' en "foo bar."</p>
+</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>Coincide con tab (U+0009).</td>
+</tr>
+<tr>
+<td><code>\v</code></td>
+<td>Coincide con tab vertical (U+000B).</td>
+</tr>
+<tr>
+<td><code>\w</code></td>
+<td>
+<p>Coincide con cualquier carácter alfanumérico, incluyendo el guión bajo. Equivalente a&nbsp;<code>[A-Za-z0-9_]</code>.</p>
+
+<p>Por ejemplo, <code>/\w/</code>&nbsp;coincide con 'a' en "apple," '5' en "$5.28," y&nbsp;'3' en "3D."</p>
+</td>
+</tr>
+<tr>
+<td><code>\W</code></td>
+<td>
+<p>Coincide con todo menos <em>caracteres de palabra</em>. Equivalente a&nbsp;<code>[^A-Za-z0-9_]</code>.</p>
+
+<p>Por ejemplo, <code>/\W/</code> o&nbsp;<code>/[^A-Za-z0-9_]/</code>&nbsp;coinciden con '%' en "50%."</p>
+</td>
+</tr>
+<tr>
+<td><code>\<em>n</em></code></td>
+<td>
+<p>Cuando <em>n</em>&nbsp;es un&nbsp;entero positivo, es una referencia hacia alguna subcadena de paréntesis dentro de la misma expresion que coincida con el número&nbsp;(contando los paréntesis izquierdos).</p>
+
+<p>Por ejemplo, <code>/apple(,)\sorange\1/</code>&nbsp;coincide con 'apple, orange,' en "apple, orange, cherry, peach."</p>
+</td>
+</tr>
+<tr>
+<td><code>\0</code></td>
+<td>Coincide con el carácter NULL (U+0000). No preseda este por otro número, ya que <code>\0&lt;numero&gt;</code>&nbsp;se considera una secuencia octal escapada.</td>
+</tr>
+<tr>
+<td><code>\xhh</code></td>
+<td>Coincide con un carácter en exadecimal hh (dos dígitos hexadecimales)</td>
+</tr>
+<tr>
+<td><code>\uhhhh</code></td>
+<td>Coincide con un carácter unicode con el código hhhh (cuatro dígitos hexadecimales).</td>
+</tr>
+</tbody>
+</table>
+                                    </div><!-- ./ayuda -->
+                                </div>
+                                
+                                <div role="tabpanel" class="tab-pane"
+                                id="flags">
+                                    <div class="ayuda">
+<table class="standard-table">
+<caption>Regular expression flags.</caption>
+<thead>
+<tr>
+<th scope="col">Bandera</th>
+<th scope="col">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>g</code></td>
+<td>Búsqueda global.</td>
+</tr>
+<tr>
+<td>i</td>
+<td>Búsqueda 'case-insensitive' (no sensible a mayúsculas).</td>
+</tr>
+<tr>
+<td>m</td>
+<td>Búsqueda multilineal.</td>
+</tr>
+<tr>
+<td>y</td>
+<td>Perform a "sticky" search that matches starting at the current position in the target string.</td>
+</tr>
+</tbody>
+</table>
+                                    </div><!-- ./ayuda -->
+                                </div>
+                                
+                                <div role="tabpanel" class="tab-pane"
+                                id="metodos">
+                                    <div class="ayuda">
+<table class="fullwidth-table">
+<caption>Métodos que utilizan expresiones regulares</caption>
+<thead>
+<tr>
+<th scope="col">Método</th>
+<th scope="col">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>exec</code></td>
+<td>Un método <code>RegExp</code> que ejecuta una búsqueda por una coincidencia en una cadena. Devuelve un array de información.</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>Un método <code>RegExp</code> que verifica una coincidencia en una cadena. Devuelve <code>true</code> o <code>false</code>.</td>
+</tr>
+<tr>
+<td><code>match</code></td>
+<td>Un método <code>String</code> que ejecuta una búsqueda por una coincidencia en una cadena. <span id="result_box" lang="es"><span class="hps">Devuelve</span> <span class="hps">un array de</span> <span class="hps">información o</span> <code><span class="hps">null</span></code> si no existe coincidencia alguna<span>.</span></span></td>
+</tr>
+<tr>
+<td><code>search</code></td>
+<td>Un método <code>String</code> que verifica una coincidencia en una cadena. <span id="result_box" lang="es"><span class="hps">Devuelve</span> <span class="hps">el índice de la coincidencia</span><span class="hps">,</span> <span class="hps">o -1 si</span> <span class="hps">la búsqueda falla</span><span>.</span></span></td>
+</tr>
+<tr>
+<td><code>replace</code></td>
+<td>Un método <code>String</code> que ejecuta una búsqueda por una coincidencia en una cadena, y reemplaza la subcadena encontrada con una subcadena de reemplazo.</td>
+</tr>
+<tr>
+<td><code>split</code></td>
+<td>Un método <code>String</code> que utiliza una expresión regular o una cadena fija para cortar una cadena y colocarlo en un array de subcadenas.</td>
+</tr>
+</tbody>
+</table>
+                                    </div><!-- ./ayuda -->
+                                </div>
+                                
+                                <div role="tabpanel" class="tab-pane"
+                                id="resultados">
+                                    <div class="ayuda">
+<table class="fullwidth-table">
+<caption>Resultados de la ejecución de la expresión regular.</caption>
+<thead>
+<tr>
+<th scope="col">Objeto</th>
+<th scope="col">Propiedad o indice</th>
+<th scope="col">Descripción</th>
+<th scope="col">En el ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="4"><code>myArray</code></td>
+<td>&nbsp;</td>
+<td>Las coincidencias y las subcadenas memorizadas.</td>
+<td><code>["dbbd", "bb"]</code></td>
+</tr>
+<tr>
+<td><code>index</code></td>
+<td>La posición de la coincidencia en la cadena de entrada.</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>input</code></td>
+<td>La cadena original.</td>
+<td><code>"cdbbdbsbz"</code></td>
+</tr>
+<tr>
+<td><code>[0]</code></td>
+<td>La última coincidencia de caracteres.</td>
+<td><code>"dbbd"</code></td>
+</tr>
+<tr>
+<td rowspan="2"><code>myRe</code></td>
+<td><code>lastIndex</code></td>
+<td>La posición de donde iniciar la próxima búsqueda. (Esta propiedad solo es seteada si la expresión utiliza la opción g, descrita en Advanced Searching With Flags.)</td>
+<td><code>5</code></td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td>El texto del patrón. Actualizado al momento de creación, no al ejecutarse.</td>
+<td><code>"d(b+)d"</code></td>
+</tr>
+</tbody>
+</table>
+                                    </div><!-- ./ayuda -->
+                                </div>
+                            </div><!-- ./Tab panes -->
+                        </div>
+                    </div><!-- ./col -->
+                </div><!-- ./row -->
+                
+                <!-- acerca de -->
+				<div class="modal fade" id="acercade" tabindex="-1" role="dialog"
+				aria-labelledby="acercade_label" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close"
+								data-dismiss="modal" aria-label="Close"><span
+								aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title"><span class="negrita">Acerca de...</span></h4>
+							</div>
+							
+							<div class="modal-body">
+								<div class="container-fluid">
+									<h3>wExpReg</h3>
+									<p>
+										<strong>Aplicacion web para probar expresiones regulares en JS.</strong>
+									</p>
+									<p>
+										<strong>Versi&oacute;n:</strong>&nbsp;
+										19.01
+										<br />
+                                        <strong>Subversi&oacute;n:</strong>&nbsp;
+										16
+										<br />
+                                        <strong>Desarrollo:</strong>&nbsp;
+                                        Ariel Balmaceda. Analista Programador.
+                                        <br />
+                                        <strong>Contacto:</strong>&nbsp;absoft.dev@gmail.com
+                                    </p>
+									<p>
+										<strong>&copy;
+										2017. Todos los derechos reservados.</strong>
+									</p>
+									<div id="poweredby" class="row">
+										<div class="col-xs-3 col-xs-offset-3">
+											<a href="http://jquery.com/" class="thumbnail"
+											target="_blank"><img src="img/acercade/jquery_ajax_logo.png"
+											alt="Jquery" id="jquery"></a>
+										</div>
+										<div class="col-xs-3">
+											<a href="http://getbootstrap.com/"
+											target="_blank"><img src="img/acercade/bootstrap_logo.png"
+											alt="Bootsrap" id="bootstrap"></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+								data-dismiss="modal">Cerrar</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+				<!-- /.acerca de -->
+            </div><!-- /.container -->
+            
+            <!-- Placed at the end of the document so the pages load faster -->
+            
+            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+            <!--[if lt IE 9]>
+            <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+            <!--
+            <script src="//absoftware.net/www/jquery/jquery-1.12.4.min.js"></script>
+            -->
+			<!-- Latest compiled and minified JavaScript -->
+            <!--
+            <script src="//absoftware.net/www/jquery/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            -->
+            <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+            <!--
+            <script src="//absoftware.net/www/jquery/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+            -->
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
+            crossorigin="anonymous"></script>
+            <!-- -->
+            <script src="js/main.min.js"></script>
+            <!-- <script src="//absoftware.tk/assets/js/ga.js"></script> -->
+        </body>
+    </html>
